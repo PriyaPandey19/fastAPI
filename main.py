@@ -3,11 +3,20 @@ from schema import CarFeatures, PredictionResponse
 from fastapi.responses import JSONResponse
 from model import predict_price, load_artifacts
 from pathlib import Path
+from fastapi.middleware.cors import CORSMiddleware
 
 print("LOADED MAIN FILE:", Path(__file__).resolve())
 
 
+
 app = FastAPI(title="Car price prediction API", version="1.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origin=["*"],
+    allow_credentials=True,
+    allow_methods=["*"]
+)
 
 @app.on_event("startup")
 def startup_event():
